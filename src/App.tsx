@@ -1,13 +1,11 @@
-import './App.css'
+import Habit from "./components/Habit";
 
 function App() {
-
-
   return (
     <>
-      <h1> aopa</h1>
+      <Habit />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
