@@ -23,7 +23,7 @@ function App() {
         {!dark ? "light" : "dark"}
       </button>
       <div className="justify-center items-center flex ">
-        <div className="w-full max-w-5xl px-6 flex flex-col gap-16">
+        <div className="w-full px-6 flex flex-col gap-16">
         <Header />
         <SummaryTable />
         </div>
