@@ -7,6 +7,8 @@ export default function SummaryTable() {
   const daysOfWeek = ["D", "S", "T", "Q", "Q", "S", "S"];
 
   const summaryDates = generateDatesFromYearBeginning()
+  const minimumSumnmaryDatesSize = 18 * 7 //18 weeks 
+  const amountOfDaysTofill = minimumSumnmaryDatesSize - summaryDates.length
 
   return (
     <div className="w-full flex ">
@@ -26,7 +28,9 @@ export default function SummaryTable() {
         {summaryDates.map(date =>{
             return <HabitDay key={date.toString()} />
         })}
-        
+        {amountOfDaysTofill > 0 && Array.from({length: amountOfDaysTofill}).map((_,index)=>{
+            return     <div key={index} className=" w-10 h-10 bg-zinc-900 border-2 opacity-40 cursor-not-allowed border-zinc-800 rounded-lg"></div>
+        })}
       </div>
     </div>
   );

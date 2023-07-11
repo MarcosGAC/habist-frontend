@@ -14,7 +14,7 @@ function App() {
   const themeStyle = !dark ? `bg-dark text-white` : `bg-light text-black`;
 
   return (
-    <main className={` font-bold  ${themeStyle}  w-screen h-screen`}>
+    <main className={` font-bold transition-all duration-700  ${themeStyle}  w-screen h-screen`}>
       <button
         className={`uppercase w-14 h-14 rounded-full bg-red-500`}
         type="button"
