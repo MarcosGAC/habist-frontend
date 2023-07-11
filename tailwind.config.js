@@ -2,7 +2,12 @@
 export default {
   content: ["./src/**/*.tsx", "./index.html"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        dark: "#09090A",
+        light: "#fff",
+      },
+    },
   },
   plugins: [],
 };
