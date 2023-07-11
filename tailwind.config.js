@@ -7,6 +7,9 @@ export default {
         dark: "#09090A",
         light: "#fff",
       },
+      gridTemplateRows: {
+        7: "repeat(7, minmax(0,1fr))",
+      },
     },
   },
   plugins: [],
