@@ -1,11 +1,14 @@
 import React from "react";
 import { Plus } from "phosphor-react";
+import logo from "../assets/logo.svg";
 
-export default function Header() {
+export default function Header({ dark }: any) {
+  const changeTextColor = dark ? `text-black` : `text-white`;
   return (
     <div className=" w-full max-w-3xl mx-auto flex items-center justify-between">
-      <div className="w-28 h-28 bg-purple-600 justify-center items-center flex">
-        logo aqui
+      <div className={`${changeTextColor} text-4xl w-28 font-bold `}>
+        <img src={logo} className={` justify-center items-center flex`} />
+        Habits
       </div>
       <button
         type="button"

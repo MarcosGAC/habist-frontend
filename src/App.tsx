@@ -14,7 +14,7 @@ function App() {
   const themeStyle = !dark ? `bg-dark text-white` : `bg-light text-black`;
 
   return (
-    <main className={` font-bold transition-all duration-700  ${themeStyle}  w-screen h-screen`}>
+    <main className={`${themeStyle}  w-screen h-screen `}>
       <button
         className={`uppercase w-14 h-14 rounded-full bg-red-500`}
         type="button"
@@ -22,9 +22,9 @@ function App() {
       >
         {!dark ? "light" : "dark"}
       </button>
-      <div className="justify-center items-center flex ">
+      <div className="justify-center items-center flex pt-20">
         <div className="w-full px-6 flex flex-col gap-16">
-        <Header />
+        <Header dark={dark}/>
         <SummaryTable />
         </div>
       </div>

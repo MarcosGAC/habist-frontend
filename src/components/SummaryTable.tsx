@@ -11,20 +11,21 @@ export default function SummaryTable() {
   const amountOfDaysTofill = minimumSumnmaryDatesSize - summaryDates.length
 
   return (
-    <div className="w-full flex ">
-      <div className="grid grid-rows-7 grid-flow-row gap-3">
+    <div className="w-full flex justify-center ">
+      <div className=" flex ">
+      <div className="grid grid-rows-7  grid-flow-row gap-3  ">
         {daysOfWeek.map((day: string, index: number) => {
           return (
             <div
               key={index}
-              className="text-zinc-400 font-bold text-xl h-10 w-10 flex items-center justify-center"
+              className="text-zinc-400 font-bold text-xl h-10 w-10 flex items-center justify-center "
             >
               {day}
             </div>
           );
         })}
       </div>
-      <div className="grid grid-rows-7 grid-flow-col gap-3">
+      <div  className="summary-container grid grid-rows-7 grid-flow-col scrollbar-thin  scrollbar-track-gray-500 max-w-5xl scrollbar-corner-rounded-xl overflow-x-auto  scrollbar-h-5 scrollbar-thumb-violet-500">
         {summaryDates.map(date =>{
             return <HabitDay key={date.toString()} />
         })}
@@ -32,6 +33,7 @@ export default function SummaryTable() {
             return     <div key={index} className=" w-10 h-10 bg-zinc-900 border-2 opacity-40 cursor-not-allowed border-zinc-800 rounded-lg"></div>
         })}
       </div>
+    </div>
     </div>
   );
 }
