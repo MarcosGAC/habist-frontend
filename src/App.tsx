@@ -14,9 +14,9 @@ function App() {
   const themeStyle = !dark ? `bg-dark text-white` : `bg-light text-black`;
 
   return (
-    <main className={`${themeStyle}  w-screen h-screen `}>
+    <main className={`${themeStyle}  w-screen h-screen transition-colors duration-1000`}>
       <button
-        className={`uppercase w-14 h-14 rounded-full bg-red-500`}
+        className={`uppercase w-14 h-14 rounded-full bg-red-500 `}
         type="button"
         onClick={() => handleTheme()}
       >
