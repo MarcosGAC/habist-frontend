@@ -1,6 +1,6 @@
 import React from "react";
 import HabitDay from "./HabitDay";
-import { generateDatesFromYearBeginning } from "./utils/generate-dates-from-year-beginning.ts";
+import { generateDatesFromYearBeginning } from "../utils/generate-dates-from-year-beginning.ts";
 
 export default function SummaryTable() {
   const daysOfWeek = ["D", "S", "T", "Q", "Q", "S", "S"];
