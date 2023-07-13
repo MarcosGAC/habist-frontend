@@ -3,12 +3,13 @@ import * as Checkbox from "@radix-ui/react-checkbox";
 import ProgressBar from "./ProgressBar";
 import { Check } from "phosphor-react";
 interface HabitDayProps {
-  completed: number;
-  amount: number;
+  date: Date;
+  completed?: number;
+  amount?: number;
 }
 
-export default function HabitDay({ completed, amount }: HabitDayProps) {
-  const completedPercentage = (completed / amount) * 100;
+export default function HabitDay({ completed = 0, amount = 0 }: HabitDayProps) {
+  const completedPercentage = amount > 0 ? (completed / amount) * 100 : 0;
   console.log(completedPercentage);
   let className = "bg-zinc-900 border-zinc-800";
 
