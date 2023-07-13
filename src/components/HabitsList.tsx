@@ -1,13 +1,23 @@
 import * as Checkbox from "@radix-ui/react-checkbox";
 import { Check } from "phosphor-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { api } from "../lib/axios";
 
 interface HabitListProps {
   date: Date;
 }
 
+interface HabitsInfo {
+  possibleHabits: {
+    id: string;
+    title: string;
+    created_At: string;
+  }[];
+  completedHabits: string[];
+}
+
 export default function HabitsList({ date }: HabitListProps) {
+  const [habitsInfo, setHabitsInfo] = useState<HabitsInfo>();
   useEffect(() => {
     api
       .get("day", {
@@ -16,23 +26,27 @@ export default function HabitsList({ date }: HabitListProps) {
         },
       })
       .then((response) => {
-        console.log(response.data);
+        setHabitsInfo(response.data);
       });
   }, []);
 
   return (
     <div className="mt-6 flex flex-col gap-3">
-      <Checkbox.Root className="flex items-center gap-3  group">
-        <div className="h-8 w-8 rounded-lg flex items-center justify-center bg-zinc-800 border-zinc-700 border group-data-[state=checked]:bg-green-500 group-data-[state=checked]:border-green-500">
-          <Checkbox.Indicator>
-            <Check size={20} className="text-white" />
-          </Checkbox.Indicator>
-        </div>
+      {habitsInfo?.possibleHabits.map((habit) => {
+        return (
+          <Checkbox.Root checked={habitsInfo.completedHabits.includes(habit.id)} key={habit.id} className="flex items-center gap-3  group">
+            <div className="h-8 w-8 rounded-lg flex items-center justify-center bg-zinc-800 border-zinc-700 border group-data-[state=checked]:bg-green-500 group-data-[state=checked]:border-green-500">
+              <Checkbox.Indicator>
+                <Check size={20} className="text-white" />
+              </Checkbox.Indicator>
+            </div>
 
-        <span className="font-bold text-xl text-white leading-tight group-data-[state=checked]:line-through group-data-[state=checked]:text-zinc-500">
-          nadar
-        </span>
-      </Checkbox.Root>
+            <span className="font-bold text-xl text-white leading-tight group-data-[state=checked]:line-through group-data-[state=checked]:text-zinc-500">
+              {habit.title}
+            </span>
+          </Checkbox.Root>
+        );
+      })}
     </div>
   );
 }
