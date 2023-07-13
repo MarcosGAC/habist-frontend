@@ -43,7 +43,7 @@ export default function SummaryTable() {
           })}
         </div>
         <div className="summary-container grid grid-rows-7 grid-flow-col scrollbar-thin  scrollbar-track-gray-500 max-w-5xl scrollbar-corner-rounded-xl overflow-x-auto  scrollbar-h-5 scrollbar-thumb-violet-500">
-          {summaryDates.map((date) => {
+          {summary.length > 0 && summaryDates.map((date) => {
             const dayInSummary = summary.find((day) => {
               return dayjs(date).isSame(day.date, 'day');
             });
@@ -51,7 +51,7 @@ export default function SummaryTable() {
               <HabitDay
                 date ={date}
                 amount={dayInSummary?.amount}
-                completed={dayInSummary?.completed}
+                defaultCompleted={dayInSummary?.completed}
                 key={date.toString()}
               />
             );

@@ -2,17 +2,20 @@ import * as Popover from "@radix-ui/react-popover";
 import ProgressBar from "./ProgressBar";
 import dayjs from "dayjs";
 import HabitsList from "./HabitsList";
+import { useState } from "react";
 interface HabitDayProps {
   date: Date;
-  completed?: number;
+  defaultCompleted?: number;
   amount?: number;
 }
 
 export default function HabitDay({
-  completed = 0,
+  defaultCompleted = 0,
   amount = 0,
   date,
 }: HabitDayProps) {
+
+  const [ completed, setCompleted ] = useState(defaultCompleted)
   const completedPercentage = amount > 0 ? (completed / amount) * 100 : 0;
 
   const dayAndMonth = dayjs(date).format("DD/MM");
@@ -33,6 +36,10 @@ export default function HabitDay({
     className = "bg-violet-500 border-violet-400";
   }
 
+  function handleCompletedChange(completed: number){
+    setCompleted(completed)
+  }
+
   return (
     <Popover.Root>
       <Popover.Trigger
@@ -44,7 +51,7 @@ export default function HabitDay({
           <span className="mt-1 font-extrabold leading-tight text-3xl">
             {dayAndMonth}
           </span>
-          <HabitsList date={date}/>
+          <HabitsList date={date} handleCompletedChange={handleCompletedChange}/>
           <ProgressBar progress={completedPercentage} />
           <Popover.Arrow height={8} width={16} className="fill-zinc-900" />
         </Popover.Content>
