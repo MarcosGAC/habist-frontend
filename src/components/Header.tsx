@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { Plus, X } from "phosphor-react";
 import * as Dialog from "@radix-ui/react-dialog";
 import logo from "../assets/logo.svg";

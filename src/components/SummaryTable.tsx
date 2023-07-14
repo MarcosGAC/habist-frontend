@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import HabitDay from "./HabitDay";
 import { generateDatesFromYearBeginning } from "../utils/generate-dates-from-year-beginning.ts";
 import { api } from "../lib/axios.ts";
