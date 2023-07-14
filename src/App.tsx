@@ -27,7 +27,7 @@ function App() {
       </button>
       <div className="justify-center items-center flex pt-20">
         <div className="w-full px-6 flex flex-col gap-16">
-          <Header dark={dark} />
+          <Header />
           <SummaryTable />
         </div>
       </div>
