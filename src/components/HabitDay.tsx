@@ -26,7 +26,7 @@ export default function HabitDay({
   const dayAndMonth = dayjs(date).format("DD/MM");
   const dayOfWeek = dayjs(date).format("dddd");
 
-  let className = "bg-zinc-900 border-zinc-800 mx-1";
+  let className = "bg-zinc-900 border-zinc-800 ";
 
   if (completedPercentage > 0 && completedPercentage < 10) {
     className = "bg-violet-900 border-violet-800";
@@ -47,7 +47,7 @@ export default function HabitDay({
   return (
     <Popover.Root>
       <Popover.Trigger
-        className={`w-10 h-10 ${className} border-2 rounded-lg cursor-pointer mb-3 mx-1`}
+        className={`w-10 h-10 ${className} border-2 rounded-lg cursor-pointer `}
       ></Popover.Trigger>
       <Popover.Portal>
         <Popover.Content className="min-w-[320px] rounded-2xl bg-zinc-900 flex flex-col p-6 text-zinc-200">
