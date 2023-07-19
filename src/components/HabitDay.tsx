@@ -1,8 +1,9 @@
+import React, { useEffect, useState } from "react";
 import * as Popover from "@radix-ui/react-popover";
 import ProgressBar from "./ProgressBar";
 import dayjs from "dayjs";
 import HabitsList from "./HabitsList";
-import { useState } from "react";
+
 interface HabitDayProps {
   date: Date;
   defaultCompleted?: number;
@@ -14,14 +15,17 @@ export default function HabitDay({
   amount = 0,
   date,
 }: HabitDayProps) {
+  const [completed, setCompleted] = useState<number>(defaultCompleted);
+  const [completedPercentage, setCompletedPercentage] = useState<number>(0);
 
-  const [ completed, setCompleted ] = useState(defaultCompleted)
-  const completedPercentage = amount > 0 ? (completed / amount) * 100 : 0;
+  useEffect(() => {
+    // Atualiza a porcentagem de conclusão sempre que o componente for montado ou atualizado
+    setCompletedPercentage((completed / amount) * 100);
+  }, [completed, amount]);
 
   const dayAndMonth = dayjs(date).format("DD/MM");
   const dayOfWeek = dayjs(date).format("dddd");
 
-  console.log(completedPercentage);
   let className = "bg-zinc-900 border-zinc-800";
 
   if (completedPercentage > 0 && completedPercentage < 10) {
@@ -36,14 +40,14 @@ export default function HabitDay({
     className = "bg-violet-500 border-violet-400";
   }
 
-  function handleCompletedChange(completed: number){
-    setCompleted(completed)
+  function handleCompletedChange(completed: number) {
+    setCompleted(completed);
   }
 
   return (
     <Popover.Root>
       <Popover.Trigger
-        className={` w-10 h-10 ${className} border-2  rounded-lg cursor-pointer mb-3 mx-1`}
+        className={`w-10 h-10 ${className} border-2 rounded-lg cursor-pointer mb-3 mx-1`}
       ></Popover.Trigger>
       <Popover.Portal>
         <Popover.Content className="min-w-[320px] rounded-2xl bg-zinc-900 flex flex-col p-6 text-zinc-200">
@@ -51,7 +55,7 @@ export default function HabitDay({
           <span className="mt-1 font-extrabold leading-tight text-3xl">
             {dayAndMonth}
           </span>
-          <HabitsList date={date} handleCompletedChange={handleCompletedChange}/>
+          <HabitsList date={date} handleCompletedChange={handleCompletedChange} />
           <ProgressBar progress={completedPercentage} />
           <Popover.Arrow height={8} width={16} className="fill-zinc-900" />
         </Popover.Content>
