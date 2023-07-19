@@ -45,7 +45,7 @@ export default function SummaryTable() {
             );
           })}
         </div>
-        <div className="summary-container grid grid-rows-7 grid-flow-col scrollbar-thin  scrollbar-track-gray-500 max-w-5xl scrollbar-corner-rounded-xl overflow-x-auto  scrollbar-h-5 scrollbar-thumb-violet-500">
+        <div className="summary-container gap-2 grid grid-rows-7 grid-flow-col scrollbar-thin  scrollbar-track-gray-500 max-w-5xl scrollbar-corner-rounded-xl overflow-x-auto  scrollbar-h-5 scrollbar-thumb-violet-500">
           {summary.length >= 0 &&
             summaryDates.map((date) => {
               const dayInSummary = summary.find((day) => {
