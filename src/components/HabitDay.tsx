@@ -26,7 +26,7 @@ export default function HabitDay({
   const dayAndMonth = dayjs(date).format("DD/MM");
   const dayOfWeek = dayjs(date).format("dddd");
 
-  let className = "bg-zinc-900 border-zinc-800";
+  let className = "bg-zinc-900 border-zinc-800 mx-1";
 
   if (completedPercentage > 0 && completedPercentage < 10) {
     className = "bg-violet-900 border-violet-800";
