@@ -24,7 +24,7 @@ export default function SummaryTable() {
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    api.get("summary").then((response) => {
+    api.get("/summary").then((response) => {
       console.log("response:", response.data);
       setSummary(response.data);
       setDataLoaded(true); // Marca os dados como carregados após obter a resposta da API
