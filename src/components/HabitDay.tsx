@@ -19,12 +19,18 @@ export default function HabitDay({
   const [completedPercentage, setCompletedPercentage] = useState<number>(0);
 
   useEffect(() => {
+    // Atualiza o estado `completed` sempre que a prop `defaultCompleted` mudar
+    setCompleted(defaultCompleted);
+  }, [defaultCompleted]);
+
+  useEffect(() => {
     // Atualiza a porcentagem de conclusão sempre que o componente for montado ou atualizado
     setCompletedPercentage((completed / amount) * 100);
   }, [completed, amount]);
 
   const dayAndMonth = dayjs(date).format("DD/MM");
   const dayOfWeek = dayjs(date).format("dddd");
+
 
   let className = "bg-zinc-900 border-zinc-800 ";
 

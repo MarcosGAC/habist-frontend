@@ -34,23 +34,32 @@ export default function HabitsList({ date,handleCompletedChange }: HabitListProp
 
   async function handleToggleHabit(habitId: string) {
     const isHabitCompleted = habitsInfo!.completedHabits.includes(habitId);
-
-    await api.patch(`/habits/${habitId}/toggle`);
-
-    let completedHabits: string[] = [];
-
-    if (isHabitCompleted) {
-      completedHabits = habitsInfo!.completedHabits.filter(
-        (id) => id !== habitId
-      );
-    } else {
-      completedHabits = [...habitsInfo!.completedHabits, habitId];
+  
+    try {
+      await api.patch(`/habits/${habitId}/toggle`, {}, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      let completedHabits: string[] = [];
+  
+      if (isHabitCompleted) {
+        completedHabits = habitsInfo!.completedHabits.filter((id) => id !== habitId);
+      } else {
+        completedHabits = [...habitsInfo!.completedHabits, habitId];
+      }
+  
+      setHabitsInfo({
+        ...habitsInfo,
+        completedHabits,
+      });
+  
+      handleCompletedChange(completedHabits.length);
+    } catch (error) {
+      console.error("Error toggling habit:", error);
+      // Handle error (e.g., show an error message)
     }
-    setHabitsInfo({
-      possibleHabits: habitsInfo!.possibleHabits,
-      completedHabits,
-    });
-    handleCompletedChange(completedHabits.length)
   }
 
   const isDateInPast = dayjs(date).endOf("day").isBefore(new Date());

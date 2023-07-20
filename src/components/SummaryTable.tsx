@@ -49,7 +49,7 @@ export default function SummaryTable() {
           {summary.length >= 0 &&
             summaryDates.map((date) => {
               const dayInSummary = summary.find((day) => {
-                return dayjs(date).isSame(day.date, "day");
+                return dayjs(date).isAfter(day.date, "day");
               });
 
               // Verifica se os dados estão carregados antes de renderizar o componente
