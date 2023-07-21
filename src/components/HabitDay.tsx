@@ -14,8 +14,7 @@ export default function HabitDay({
   amount = 0,
   date,
 }: HabitDayProps) {
-
-  const [ completed, setCompleted ] = useState(defaultCompleted)
+  const [completed, setCompleted] = useState(defaultCompleted);
   const completedPercentage = amount > 0 ? (completed / amount) * 100 : 0;
 
   const dayAndMonth = dayjs(date).format("DD/MM");
@@ -36,8 +35,8 @@ export default function HabitDay({
     className = "bg-violet-500 border-violet-400";
   }
 
-  function handleCompletedChange(completed: number){
-    setCompleted(completed)
+  function handleCompletedChange(completed: number) {
+    setCompleted(completed);
   }
 
   return (
@@ -51,7 +50,10 @@ export default function HabitDay({
           <span className="mt-1 font-extrabold leading-tight text-3xl">
             {dayAndMonth}
           </span>
-          <HabitsList date={date} handleCompletedChange={handleCompletedChange}/>
+          <HabitsList
+            date={date}
+            handleCompletedChange={handleCompletedChange}
+          />
           <ProgressBar progress={completedPercentage} />
           <Popover.Arrow height={8} width={16} className="fill-zinc-900" />
         </Popover.Content>
