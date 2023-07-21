@@ -33,33 +33,37 @@ export default function HabitsList({ date,handleCompletedChange }: HabitListProp
   }, []);
   async function handleToggleHabit(habitId: string) {
     const isHabitCompleted = habitsInfo?.completedHabits.includes(habitId);
-
+  
     try {
-      await api.patch(`/habits/${habitId}/toggle`, {}, {
+      // Enviar apenas o habitId no corpo da solicitação PATCH
+      // Você não precisa enviar um objeto vazio '{}' neste caso
+      await api.patch(`/habits/${habitId}/toggle`, undefined, {
         headers: {
-          'Content-Type': 'application/json',
+          // Não é necessário definir o cabeçalho "Content-Type" quando você está enviando um objeto JavaScript
+          // 'Content-Type': 'application/json', <- Remova esta linha
         },
       });
-
+  
       let completedHabits: string[] = [];
-
+  
       if (isHabitCompleted) {
         completedHabits = habitsInfo?.completedHabits.filter((id) => id !== habitId) || [];
       } else {
         completedHabits = [...(habitsInfo?.completedHabits || []), habitId];
       }
-
+  
       setHabitsInfo({
         ...habitsInfo,
         completedHabits,
       });
-
+  
       handleCompletedChange(completedHabits.length);
     } catch (error) {
       console.error("Error toggling habit:", error);
       // Handle error (e.g., show an error message)
     }
   }
+  
 
 
   const isDateInPast = dayjs(date).endOf("day").isBefore(new Date());
