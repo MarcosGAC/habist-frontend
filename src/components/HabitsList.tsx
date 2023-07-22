@@ -6,62 +6,75 @@ import dayjs from "dayjs";
 
 interface HabitListProps {
   date: Date;
-  handleCompletedChange: (completed:number) =>void
+  handleCompletedChange: (completed: number) => void;
+}
+
+interface PossibleHabit {
+  id: string;
+  title: string;
+  created_At: string;
 }
 
 interface HabitsInfo {
-  possibleHabits: {
-    id: string;
-    title: string;
-    created_At: string;
-  }[];
+  possibleHabits: PossibleHabit[];
   completedHabits: string[];
 }
 
-export default function HabitsList({ date,handleCompletedChange }: HabitListProps) {
-  const [habitsInfo, setHabitsInfo] = useState<HabitsInfo>();
+export default function HabitsList({
+  date,
+  handleCompletedChange,
+}: HabitListProps) {
+  const [habitsInfo, setHabitsInfo] = useState<HabitsInfo | undefined>();
   useEffect(() => {
-    api
-      .get("day", {
-        params: {
-          date: date.toISOString(),
-        },
-      })
-      .then((response) => {
-        setHabitsInfo(response.data);
-      });
-  }, []);
-
- async function handleToggleHabit(habitId: string) {
-  const isHabitCompleted = habitsInfo?.completedHabits.includes(habitId);
-  let completedHabits: string[] = [];
-
-  try {
-    await api.patch(`/habits/${habitId}/toggle`, {}, {
-      headers: {
-        'Content-Type': 'application/json',
+    api.get("day", {
+      params: {
+        date: date.toISOString(),
       },
+    })
+    .then((response) => {
+      setHabitsInfo(response.data);
+    })
+    .catch((error) => {
+      console.error("Error fetching habits:", error);
     });
+  }, [date]);
 
-    setHabitsInfo(prevHabitsInfo => {
-      completedHabits = isHabitCompleted
-        ? prevHabitsInfo?.completedHabits.filter((id) => id !== habitId) || []
-        : [...(prevHabitsInfo?.completedHabits || []), habitId];
+  async function handleToggleHabit(habitId: string) {
+    if (!habitsInfo) {
+      console.error("Habit info is not available.");
+      return;
+    }
 
-      return {
-        ...prevHabitsInfo,
-        completedHabits,
-      };
-    });
+    const isHabitCompleted = habitsInfo.completedHabits.includes(habitId);
+    try {
+      await api.patch(`habits/${habitId}/toggle`, {}, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
-    handleCompletedChange(completedHabits.length);
-  } catch (error) {
-    console.error("Error toggling habit:", error);
-    // Handle error (e.g., show an error message)
+      const completedHabits = isHabitCompleted
+        ? habitsInfo.completedHabits.filter((id) => id !== habitId)
+        : [...habitsInfo.completedHabits, habitId];
+
+      setHabitsInfo((prevHabitsInfo) => {
+        if (!prevHabitsInfo) {
+          console.error("Previous habit info is not available.");
+          return prevHabitsInfo;
+        }
+
+        return {
+          ...prevHabitsInfo,
+          completedHabits,
+        };
+      });
+
+      handleCompletedChange(completedHabits.length);
+    } catch (error) {
+      console.error("Error toggling habit:", error);
+      // Handle error (e.g., show an error message)
+    }
   }
-}
-
-
 
   const isDateInPast = dayjs(date).endOf("day").isBefore(new Date());
 
