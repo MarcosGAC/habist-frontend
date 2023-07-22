@@ -31,35 +31,36 @@ export default function HabitsList({ date,handleCompletedChange }: HabitListProp
         setHabitsInfo(response.data);
       });
   }, []);
-  async function handleToggleHabit(habitId: string) {
-    const isHabitCompleted = habitsInfo?.completedHabits.includes(habitId);
 
-    try {
-      await api.patch(`/habits/${habitId}/toggle`, {}, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+ async function handleToggleHabit(habitId: string) {
+  const isHabitCompleted = habitsInfo?.completedHabits.includes(habitId);
+  let completedHabits: string[] = [];
 
-      let completedHabits: string[] = [];
+  try {
+    await api.patch(`/habits/${habitId}/toggle`, {}, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
 
-      if (isHabitCompleted) {
-        completedHabits = habitsInfo?.completedHabits.filter((id) => id !== habitId) || [];
-      } else {
-        completedHabits = [...(habitsInfo?.completedHabits || []), habitId];
-      }
+    setHabitsInfo(prevHabitsInfo => {
+      completedHabits = isHabitCompleted
+        ? prevHabitsInfo?.completedHabits.filter((id) => id !== habitId) || []
+        : [...(prevHabitsInfo?.completedHabits || []), habitId];
 
-      setHabitsInfo({
-        ...habitsInfo,
+      return {
+        ...prevHabitsInfo,
         completedHabits,
-      });
+      };
+    });
 
-      handleCompletedChange(completedHabits.length);
-    } catch (error) {
-      console.error("Error toggling habit:", error);
-      // Handle error (e.g., show an error message)
-    }
+    handleCompletedChange(completedHabits.length);
+  } catch (error) {
+    console.error("Error toggling habit:", error);
+    // Handle error (e.g., show an error message)
   }
+}
+
 
 
   const isDateInPast = dayjs(date).endOf("day").isBefore(new Date());
