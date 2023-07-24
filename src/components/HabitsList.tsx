@@ -3,7 +3,6 @@ import { Check } from "phosphor-react";
 import { useEffect, useState } from "react";
 import { api } from "../lib/axios";
 import dayjs from "dayjs";
-import { DateTime } from "luxon";
 
 interface HabitListProps {
   date: Date;
@@ -27,18 +26,17 @@ export default function HabitsList({
 }: HabitListProps) {
   const [habitsInfo, setHabitsInfo] = useState<HabitsInfo | undefined>();
   useEffect(() => {
-    api
-      .get("day", {
-        params: {
-          date: DateTime.fromJSDate(date).toISO(),
-        },
-      })
-      .then((response) => {
-        setHabitsInfo(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching habits:", error);
-      });
+    api.get("day", {
+      params: {
+        date: date.toISOString(),
+      },
+    })
+    .then((response) => {
+      setHabitsInfo(response.data);
+    })
+    .catch((error) => {
+      console.error("Error fetching habits:", error);
+    });
   }, [date]);
 
   async function handleToggleHabit(habitId: string) {
@@ -74,7 +72,7 @@ export default function HabitsList({
       handleCompletedChange(completedHabits.length);
     } catch (error) {
       console.error("Error toggling habit:", error);
-     
+      // Handle error (e.g., show an error message)
     }
   }
 
