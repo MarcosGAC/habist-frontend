@@ -1,6 +1,6 @@
 import * as Popover from "@radix-ui/react-popover";
 import ProgressBar from "./ProgressBar";
-import dayjs from "dayjs";
+// import dayjs from "dayjs";
 import { DateTime } from "luxon";
 import HabitsList from "./HabitsList";
 import { useState } from "react";
