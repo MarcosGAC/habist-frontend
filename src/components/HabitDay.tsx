@@ -1,6 +1,7 @@
 import * as Popover from "@radix-ui/react-popover";
 import ProgressBar from "./ProgressBar";
 import dayjs from "dayjs";
+import { DateTime } from "luxon";
 import HabitsList from "./HabitsList";
 import { useState } from "react";
 interface HabitDayProps {
@@ -17,10 +18,9 @@ export default function HabitDay({
   const [completed, setCompleted] = useState(defaultCompleted);
   const completedPercentage = amount > 0 ? (completed / amount) * 100 : 0;
 
-  const dayAndMonth = dayjs(date).format("DD/MM");
-  const dayOfWeek = dayjs(date).format("dddd");
+  const dayAndMonth = DateTime.fromJSDate(date).toFormat("dd/MM");
+  const dayOfWeek = DateTime.fromJSDate(date).toFormat("cccc");
 
-  console.log(completedPercentage);
   let className = "bg-zinc-900 border-zinc-800";
 
   if (completedPercentage > 0 && completedPercentage < 10) {
