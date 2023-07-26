@@ -77,6 +77,7 @@ export default function HabitsList({
   }
 
   const isDateInPast = dayjs(date).endOf("day").isBefore(new Date());
+  console.log(isDateInPast)
 
   return (
     <div className="mt-6 flex flex-col gap-3">
