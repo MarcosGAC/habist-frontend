@@ -13,7 +13,7 @@ export default function ProgressBar(props: ProgressBarProps) {
       <div
         style={progressSyles}
         aria-valuenow={props.progress}
-        className={`h-3 full ${props.className} bg-violet-700 transition-all duration-500 `}
+        className={`h-3 full ${props.className} transition-all duration-500 `}
       />
     </div>
   );
