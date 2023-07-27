@@ -1,5 +1,6 @@
 interface ProgressBarProps {
   progress: number;
+  className:string
 }
 
 export default function ProgressBar(props: ProgressBarProps) {
@@ -12,7 +13,7 @@ export default function ProgressBar(props: ProgressBarProps) {
       <div
         style={progressSyles}
         aria-valuenow={props.progress}
-        className="h-3 w-3/4 bg-violet-700 transition-all duration-500 max-w-full"
+        className={`h-3 full ${props.className} bg-violet-700 transition-all duration-500 `}
       />
     </div>
   );

@@ -40,13 +40,15 @@ export default function HabitDay({
   let className = "bg-zinc-900 border-zinc-800";
 
   if (completedPercentage > 0 && completedPercentage <= 25) {
-    className = "bg-[#0e4429] border-green-900";
+    className = "bg-[#0e4429] border-green-950";
   } else if (completedPercentage > 25 && completedPercentage <= 50) {
-    className = "bg-[#006d32] border-green-700";
+    className = "bg-[#006d32] border-green-800";
   } else if (completedPercentage > 50 && completedPercentage <= 75) {
-    className = "bg-[#26a641] border-green-500";
-  } else if (completedPercentage > 75 && completedPercentage <= 100) {
-    className = "bg-[#39d353] border-green-400";
+    className = "bg-[#238c3a] border-green-700";
+  } else if (completedPercentage > 75 && completedPercentage < 100) {
+    className = "bg-[#39d353]/90 border-green-600";
+  } else if (completedPercentage == 100) {
+    className = "bg-[#39d353] border-green-500";
   }
 
   function handleCompletedChange(completed: number) {
@@ -71,7 +73,7 @@ export default function HabitDay({
             date={date}
             handleCompletedChange={handleCompletedChange}
           />
-          <ProgressBar progress={completedPercentage} />
+          <ProgressBar progress={completedPercentage} className={className}/>
           <Popover.Arrow height={8} width={16} className="fill-zinc-900" />
         </Popover.Content>
       </Popover.Portal>
