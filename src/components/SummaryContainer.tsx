@@ -3,13 +3,8 @@ import { generateDatesFromYearBeginning } from "../utils/generate-dates-from-yea
 import { api } from "../lib/axios.ts";
 import Header from "./Header";
 import SummaryTable from "./SummaryTable";
+import { Summary } from "./types/summaryType.tsx";
 
-type Summary = {
-  id: string;
-  date: string;
-  amount: number;
-  completed: number;
-}[];
 
 export default function SummaryContainer() {
   const [summary, setSummary] = useState<Summary>([]);

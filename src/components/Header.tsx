@@ -3,7 +3,11 @@ import * as Dialog from "@radix-ui/react-dialog";
 import logo from "../assets/logo.svg";
 import NewHabitForm from "./NewHabitForm";
 
-export default function Header({handleHabitCreated}:any) {
+interface HeaderProps{
+  handleHabitCreated:()=> void
+}
+
+export default function Header({handleHabitCreated}:HeaderProps) {
   return (
     <div className=" w-full max-w-3xl mx-auto flex items-center justify-between  ">
       <div className="text-4xl w-28 font-bold">

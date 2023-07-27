@@ -13,7 +13,13 @@ const daysOfWeek = [
   "Sabado",
 ];
 
-export default function NewHabitForm({handleHabitCreated}:any) {
+interface NewHabitFormProps {
+  handleHabitCreated: () => void;
+}
+
+export default function NewHabitForm({
+  handleHabitCreated,
+}: NewHabitFormProps) {
   const [title, setTitle] = useState("");
   const [weekDays, setWeekDays] = useState<number[]>([]);
 

@@ -1,13 +1,23 @@
 import HabitDay from "./HabitDay";
 import dayjs from "dayjs";
 
+import { Summary } from "./types/summaryType.tsx";
+
+interface SummaryTableProps{
+  summary:Summary;
+  dataLoaded: boolean;
+  amountOfDaysTofill: number;
+  onCheckNewHabitCreated: () => void;
+  summaryDates: Date[];
+}
+
 export default function SummaryTable({
   summary,
   dataLoaded,
   amountOfDaysTofill,
   onCheckNewHabitCreated,
   summaryDates,
-}: any) {
+}: SummaryTableProps) {
   const daysOfWeek = ["D", "S", "T", "Q", "Q", "S", "S"];
 
   return (
