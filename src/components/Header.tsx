@@ -3,7 +3,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import logo from "../assets/logo.svg";
 import NewHabitForm from "./NewHabitForm";
 
-export default function Header() {
+export default function Header({handleHabitCreated}:any) {
   return (
     <div className=" w-full max-w-3xl mx-auto flex items-center justify-between  ">
       <div className="text-4xl w-28 font-bold">
@@ -30,7 +30,7 @@ export default function Header() {
             <Dialog.Title  className="text-3xl leading-tight text-white font-extrabold">
               Criar Habito
             </Dialog.Title>
-            <NewHabitForm />
+            <NewHabitForm handleHabitCreated={handleHabitCreated}/>
             </Dialog.Content>
         </Dialog.Portal>
       </Dialog.Root>

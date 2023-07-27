@@ -13,7 +13,7 @@ const daysOfWeek = [
   "Sabado",
 ];
 
-export default function NewHabitForm() {
+export default function NewHabitForm({handleHabitCreated}:any) {
   const [title, setTitle] = useState("");
   const [weekDays, setWeekDays] = useState<number[]>([]);
 
@@ -24,17 +24,24 @@ export default function NewHabitForm() {
       return;
     }
 
-    await api.post("habits", {
-      title,
-      weekDays,
-    });
+    try {
+      await api.post("habits", {
+        title,
+        weekDays,
+      });
 
-    setTitle("");
-    setWeekDays([]);
+      setTitle("");
+      setWeekDays([]);
 
-    alert("Hábito criado com sucesso!");
+      alert("Hábito criado com sucesso!");
+
+      // Chama a função handleHabitCreated para atualizar os dados da tabela após cadastrar um novo hábito
+      handleHabitCreated();
+    } catch (error) {
+      console.error("Error creating habit:", error);
+      // Handle error (e.g., show an error message)
+    }
   }
-
   function handleToggleWeekDay(weekDay: number) {
     if (weekDays.includes(weekDay)) {
       const weekDaysWithRemovedOne = weekDays.filter((day) => day !== weekDay);

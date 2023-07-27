@@ -26,17 +26,18 @@ export default function HabitsList({
 }: HabitListProps) {
   const [habitsInfo, setHabitsInfo] = useState<HabitsInfo | undefined>();
   useEffect(() => {
-    api.get("day", {
-      params: {
-        date: date.toISOString(),
-      },
-    })
-    .then((response) => {
-      setHabitsInfo(response.data);
-    })
-    .catch((error) => {
-      console.error("Error fetching habits:", error);
-    });
+    api
+      .get("day", {
+        params: {
+          date: date.toISOString(),
+        },
+      })
+      .then((response) => {
+        setHabitsInfo(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching habits:", error);
+      });
   }, [date]);
 
   async function handleToggleHabit(habitId: string) {
@@ -47,11 +48,15 @@ export default function HabitsList({
 
     const isHabitCompleted = habitsInfo.completedHabits.includes(habitId);
     try {
-      await api.patch(`habits/${habitId}/toggle`, {}, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      await api.patch(
+        `habits/${habitId}/toggle`,
+        {},
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       const completedHabits = isHabitCompleted
         ? habitsInfo.completedHabits.filter((id) => id !== habitId)
@@ -72,12 +77,10 @@ export default function HabitsList({
       handleCompletedChange(completedHabits.length);
     } catch (error) {
       console.error("Error toggling habit:", error);
-      // Handle error (e.g., show an error message)
     }
   }
 
   const isDateInPast = dayjs(date).endOf("day").isBefore(new Date());
-  console.log(isDateInPast)
 
   return (
     <div className="mt-6 flex flex-col gap-3">

@@ -2,46 +2,64 @@ import * as Popover from "@radix-ui/react-popover";
 import ProgressBar from "./ProgressBar";
 import dayjs from "dayjs";
 import HabitsList from "./HabitsList";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
 interface HabitDayProps {
   date: Date;
   defaultCompleted?: number;
   amount?: number;
+  onCheckNewHabitCreated?: () => void;
 }
 
 export default function HabitDay({
   defaultCompleted = 0,
   amount = 0,
   date,
+  onCheckNewHabitCreated,
 }: HabitDayProps) {
-  const [completed, setCompleted] = useState(defaultCompleted);
-  const completedPercentage = amount > 0 ? (completed / amount) * 100 : 0;
+  const [totalCompleted, setTotalCompleted] = useState(defaultCompleted);
+  const [totalHabits, setTotalHabits] = useState(amount);
+  const [completedPercentage, setCompletedPercentage] = useState(0);
+
+  useEffect(() => {
+    // Atualiza a porcentagem de conclusão sempre que totalCompleted ou totalHabits mudarem e quando cadastrar um novo habito
+    setCompletedPercentage(calculateCompletionPercentage());
+    setTotalHabits(amount); //define o total de habitos com o amount
+  }, [totalCompleted, totalHabits, onCheckNewHabitCreated, amount]);
+
+  function calculateCompletionPercentage() {
+    if (totalHabits > 0) {
+      return (totalCompleted / totalHabits) * 100;
+    }
+    return 0;
+  }
 
   const dayAndMonth = dayjs(date).format("DD/MM");
   const dayOfWeek = dayjs(date).format("dddd");
 
   let className = "bg-zinc-900 border-zinc-800";
 
-  if (completedPercentage > 0 && completedPercentage < 10) {
-    className = "bg-violet-900 border-violet-800";
-  } else if (completedPercentage >= 20 && completedPercentage < 40) {
-    className = "bg-violet-800 border-violet-700";
-  } else if (completedPercentage >= 40 && completedPercentage < 60) {
-    className = "bg-violet-700 border-violet-600";
-  } else if (completedPercentage >= 60 && completedPercentage <= 80) {
-    className = "bg-violet-600 border-violet-500";
-  } else if (completedPercentage > 80 && completedPercentage <= 100) {
-    className = "bg-violet-500 border-violet-400";
+  if (completedPercentage > 0 && completedPercentage <= 25) {
+    className = "bg-[#0e4429] border-green-900";
+  } else if (completedPercentage > 25 && completedPercentage <= 50) {
+    className = "bg-[#006d32] border-green-700";
+  } else if (completedPercentage > 50 && completedPercentage <= 75) {
+    className = "bg-[#26a641] border-green-500";
+  } else if (completedPercentage > 75 && completedPercentage <= 100) {
+    className = "bg-[#39d353] border-green-400";
   }
 
   function handleCompletedChange(completed: number) {
-    setCompleted(completed);
+    setTotalCompleted(completed);
+    if (onCheckNewHabitCreated) {
+      onCheckNewHabitCreated(); //  após alterar a conclusão de um hábito
+    }
   }
 
   return (
     <Popover.Root>
       <Popover.Trigger
-        className={` w-10 h-10 ${className} border-2  rounded-lg cursor-pointer`}
+        className={`w-10 h-10 ${className} border-2 rounded-lg cursor-pointer`}
       ></Popover.Trigger>
       <Popover.Portal>
         <Popover.Content className="min-w-[320px] rounded-2xl bg-zinc-900 flex flex-col p-6 text-zinc-200">
