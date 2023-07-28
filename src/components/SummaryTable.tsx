@@ -1,10 +1,13 @@
 import HabitDay from "./HabitDay";
-import dayjs from "dayjs";
-
 import { Summary } from "./types/summaryType.tsx";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import "dayjs/locale/pt-br";
+dayjs.extend(utc);
+dayjs.locale("pt-br");
 
-interface SummaryTableProps{
-  summary:Summary;
+interface SummaryTableProps {
+  summary: Summary;
   dataLoaded: boolean;
   amountOfDaysTofill: number;
   onCheckNewHabitCreated: () => void;
@@ -36,12 +39,13 @@ export default function SummaryTable({
           })}
         </div>
         <div className="summary-container gap-1 grid grid-rows-7 grid-flow-col scrollbar-thin scrollbar-track-gray-500 max-w-5xl scrollbar-corner-rounded-xl overflow-x-auto scrollbar-h-5 scrollbar-thumb-violet-500">
-          {summary.length >= 0 &&
+          {summary.length > 0 &&
             summaryDates.map((date) => {
-              const dayInSummary = summary.find((day) => {
-                return dayjs(date).isAfter(day.date, "day"); //to usando isAfter por conta do fuso do deploy do backend
-              });
-
+              const formattedDate = dayjs(date).utc().format("YYYY-MM-DD");
+              const dayInSummary = summary.find((day) =>
+                dayjs(day.date).utc().isSame(formattedDate, "day")
+              );
+              console.log("day in summary:", dayInSummary);
               if (dataLoaded) {
                 return (
                   <HabitDay
